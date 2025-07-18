@@ -26,21 +26,12 @@ public class UserDetailServiceImpl implements UserDetailsService{
     
     @Override
     public UserDetails loadUserByUsername(String nombreUsuario) throws UsernameNotFoundException {
-        System.out.println("Buscando usuario: " + nombreUsuario);
-
-        usuarioRepositorio.findAll().forEach(u -> System.out.println("Usuario en BD: " + u.getNombreUsuario()));
-
         Optional<Usuario> usuarioOpt = usuarioRepositorio.findByNombreUsuario(nombreUsuario);
         if (usuarioOpt.isEmpty()) {
-            System.out.println("Usuario no encontrado en BD: " + nombreUsuario);
             throw new UsernameNotFoundException("Usuario no encontrado: " + nombreUsuario);
         }
 
         Usuario usuario = usuarioOpt.get();
-        System.out.println("Usuario encontrado: " + usuario.getNombreUsuario());
-        System.out.println("Password en BD: " + usuario.getContrasenia());
-        System.out.println("Password ingresado: barlacteo");
-
         return org.springframework.security.core.userdetails.User
                 .builder()
                 .username(usuario.getNombreUsuario())

@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,12 @@ public class Usuario {
     @Column(name= "nombre_usuario", unique = true, nullable = false)
     @NotBlank
     private String nombreUsuario;
+
+    @Email(message = "El formato del correo electrónico no es válido")
+    @NotBlank
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
+
 
     @Column(nullable = false)
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
